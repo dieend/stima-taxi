@@ -5,10 +5,10 @@
 
 
 // should have priority drawing here
-class DrawableContainer {
+class DrawableManager {
 public:
 	typedef std::map<std::string,sf::Drawable*> Container;
 	typedef std::map<std::string,sf::Drawable*>::iterator Iterator;
-	static DrawableContainer::Container& get();
+	static DrawableManager::Container& get();
 private:
 };

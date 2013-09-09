@@ -2,12 +2,12 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include "DrawableContainer.hpp"
+#include "DrawableManager.hpp"
 
 void init() {
 	sf::CircleShape* shape = new sf::CircleShape(100.f);
     shape->setFillColor(sf::Color::Green);
-	DrawableContainer::get()["lingkarhijau"] = shape;
+	DrawableManager::get()["lingkarhijau"] = shape;
 }
 
 
@@ -26,7 +26,7 @@ void updateEverything(){}
 
 void drawEverythingVisible(sf::RenderWindow& window){
 	window.clear();
-	for (DrawableContainer::Iterator it = DrawableContainer::get().begin(); it!=DrawableContainer::get().end(); ++it) {
+	for (DrawableManager::Iterator it = DrawableManager::get().begin(); it!=DrawableManager::get().end(); ++it) {
 		window.draw(*it->second);
 	}
     window.display();
