@@ -21,7 +21,14 @@ void DrawableManager::put(const std::string& key, sf::Drawable* value, int prior
 void DrawableManager::draw(sf::RenderWindow& window){
 	for (int i=1; i<=LAYER_NUMBER; i++) {
 		for (DrawableContainerIterator it = layers[i].begin(); it!=layers[i].end(); ++it) {
-			window.draw(*it->second);
+			window.draw(*(it->second));
+		}
+	}
+}
+DrawableManager::~DrawableManager(){
+	for (int i=1; i<=LAYER_NUMBER; i++) {
+		for (DrawableContainerIterator it = layers[i].begin(); it!=layers[i].end(); ++it) {
+			delete it->second;
 		}
 	}
 }

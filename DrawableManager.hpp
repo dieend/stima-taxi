@@ -19,6 +19,7 @@ public:
 	void draw(sf::RenderWindow&);
 	static DrawableManager& instance();
 	const static int HIDDEN_LAYER = 0;
+	~DrawableManager();
 private:
 	static DrawableManager* INSTANCE;
 	const static int LAYER_NUMBER = 5;
