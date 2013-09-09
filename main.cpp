@@ -7,7 +7,7 @@
 void init() {
 	sf::CircleShape* shape = new sf::CircleShape(100.f);
     shape->setFillColor(sf::Color::Green);
-	DrawableManager::get()["lingkarhijau"] = shape;
+	DrawableManager::instance().put("lingkarhijau", shape, 0);
 }
 
 
@@ -26,9 +26,7 @@ void updateEverything(){}
 
 void drawEverythingVisible(sf::RenderWindow& window){
 	window.clear();
-	for (DrawableManager::Iterator it = DrawableManager::get().begin(); it!=DrawableManager::get().end(); ++it) {
-		window.draw(*it->second);
-	}
+	DrawableManager::instance().draw(window);
     window.display();
 }
 
