@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <map>
 #include <string>
 #include "DrawableManager.hpp"
 
 void init() {
-	sf::CircleShape* shape = new sf::CircleShape(100.f);
+	sf::CircleShape* shape = new sf::CircleShape(50.f);
     shape->setFillColor(sf::Color::Green);
-	DrawableManager::instance().put("lingkarhijau", shape, 0);
+	DrawableManager::instance().put("lingkarhijau", shape, 1);
 }
 
 
@@ -19,7 +18,6 @@ void handlePlayerInput(sf::RenderWindow& window){
             window.close();
     }
 }
-
 
 void updateEverything(){}
 
