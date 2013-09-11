@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <map>
 #include <string>
-#include "DrawableContainer.hpp"
+#include "DrawableManager.hpp"
 
 void init() {
-	sf::CircleShape* shape = new sf::CircleShape(100.f);
+	sf::CircleShape* shape = new sf::CircleShape(50.f);
     shape->setFillColor(sf::Color::Green);
-	DrawableContainer::get()["lingkarhijau"] = shape;
+	DrawableManager::instance().put("lingkarhijau", shape, 1);
 }
 
 
@@ -20,15 +19,12 @@ void handlePlayerInput(sf::RenderWindow& window){
     }
 }
 
-
 void updateEverything(){}
 
 
 void drawEverythingVisible(sf::RenderWindow& window){
 	window.clear();
-	for (DrawableContainer::Iterator it = DrawableContainer::get().begin(); it!=DrawableContainer::get().end(); ++it) {
-		window.draw(*it->second);
-	}
+	DrawableManager::instance().draw(window);
     window.display();
 }
 
