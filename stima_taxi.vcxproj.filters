@@ -13,11 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\img">
+      <UniqueIdentifier>{ac6dfcb7-be0a-418a-94e6-7538d3eea2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\img\title">
+      <UniqueIdentifier>{3ad72b40-76f8-467e-b1b7-97a1abcacc6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -28,6 +31,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +62,40 @@
     <ClInclude Include="ResourceManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleState.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Gnome.png">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resource\img\title\bg.png">
+      <Filter>Resource Files\img\title</Filter>
+    </None>
+    <None Include="Resource\img\title\mode1.png">
+      <Filter>Resource Files\img\title</Filter>
+    </None>
+    <None Include="Resource\img\title\mode2.png">
+      <Filter>Resource Files\img\title</Filter>
+    </None>
+    <None Include="Resource\img\title\mode3.png">
+      <Filter>Resource Files\img\title</Filter>
+    </None>
+    <None Include="Resource\img\title\text.png">
+      <Filter>Resource Files\img\title</Filter>
     </None>
   </ItemGroup>
 </Project>
