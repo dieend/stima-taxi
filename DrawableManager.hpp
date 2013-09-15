@@ -6,11 +6,10 @@
 #include <SFML/Graphics.hpp>
 
 
-// should have priority drawing here
 class DrawableManager {
 public:
 	typedef std::map<std::string,sf::Drawable*> DrawableContainer;
-	typedef std::vector<DrawableContainer> DrawableLayer; // drew from zero priority (the most back location)
+	typedef std::vector<DrawableContainer> DrawableLayer; // drew from priority 1 (the most back location)
 	typedef DrawableContainer::iterator DrawableContainerIterator;
 
 	sf::Drawable& get(const std::string&);
@@ -19,11 +18,11 @@ public:
 	void draw(sf::RenderWindow&);
 	static DrawableManager& instance();
 	const static int HIDDEN_LAYER = 0;
+	const static int TOP_LAYER = 4;
+	DrawableManager();
 	~DrawableManager();
 private:
-	static DrawableManager* INSTANCE;
 	const static int LAYER_NUMBER = 5;
-	DrawableManager();
 	DrawableContainer allDrawables;
 	DrawableLayer layers;
 };

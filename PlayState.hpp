@@ -1,9 +1,14 @@
 #pragma once
 
 #include "GameState.hpp"
-
+#include "DrawableManager.hpp"
 #include <SFML/Graphics.hpp>
-
+#include <memory>
+#include <iostream>
+#include "TitleState.hpp"
+#include "ResourceManager.hpp"
+#include "AnimatedSprite.hpp"
+#include "GameEngine.hpp"
 class GameEngine;
 
 class PlayState : public GameState
@@ -16,4 +21,7 @@ public:
 
 	void update();
 	void draw();
+private:
+	DrawableManager dmanager;
+	sf::Clock clock;
 };

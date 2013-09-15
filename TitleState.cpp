@@ -57,17 +57,17 @@ void TitleState::update()
 					case sf::Mouse::Left:
 						if (Collision::mouseOverSprite(m_mode1, m_game.getScreen()))
 						{
-							m_next = m_game.build<PlayState>(true);
+							m_next = m_game.build<PlayState>(false);
 						}
 
 						if (Collision::mouseOverSprite(m_mode2, m_game.getScreen()))
 						{
-							m_next = m_game.build<PlayState>(true);
+							m_next = m_game.build<PlayState>(false);
 						}
 
 						if (Collision::mouseOverSprite(m_mode3, m_game.getScreen()))
 						{
-							m_next = m_game.build<PlayState>(true);
+							m_next = m_game.build<PlayState>(false);
 						}
 
 						break;

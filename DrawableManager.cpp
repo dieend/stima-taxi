@@ -1,13 +1,5 @@
 #include "DrawableManager.hpp"
 
-DrawableManager* DrawableManager::INSTANCE = NULL;
-
-DrawableManager& DrawableManager::instance() {
-	if (INSTANCE == NULL) {
-		INSTANCE = new DrawableManager();
-	}
-	return *INSTANCE;
-}
 DrawableManager::DrawableManager() {
 	layers = DrawableLayer(LAYER_NUMBER+1);
 }
