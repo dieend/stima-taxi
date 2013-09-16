@@ -1,5 +1,4 @@
-#ifndef __DRAWABLE_MANAGER__
-#define __DRAWABLE_MANAGER__
+#pragma once
 #include <map>
 #include <string>
 #include <vector>
