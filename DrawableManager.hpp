@@ -12,7 +12,9 @@ public:
 	typedef std::vector<DrawableContainer> DrawableLayer; // drew from priority 1 (the most back location)
 	typedef DrawableContainer::iterator DrawableContainerIterator;
 
-	sf::Drawable& get(const std::string&);
+	template <typename T>
+	T& get(const std::string&);
+	
 	// priority: 1-5, drawed from 1 to 5. priority 0 is not drawed. 
 	void put(const std::string& key, sf::Drawable* value, int priority);
 	void draw(sf::RenderWindow&);
@@ -26,4 +28,10 @@ private:
 	DrawableContainer allDrawables;
 	DrawableLayer layers;
 };
+template <typename T>
+T& DrawableManager::get(const std::string& key)
+{
+	return dynamic_cast<T&> (*allDrawables[key]);
+}
+
 #endif

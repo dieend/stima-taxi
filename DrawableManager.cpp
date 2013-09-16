@@ -3,9 +3,6 @@
 DrawableManager::DrawableManager() {
 	layers = DrawableLayer(LAYER_NUMBER+1);
 }
-sf::Drawable& DrawableManager::get(const std::string& key){
-	return *allDrawables[key];
-}
 void DrawableManager::put(const std::string& key, sf::Drawable* value, int priority){
 	sf::Drawable*& ref = allDrawables[key];
 	if (ref != value) {

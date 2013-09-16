@@ -22,7 +22,7 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
     walkingAnimation->addFrame(sf::IntRect(110, 0, 57, 97));
 
     // set up AnimatesSprite
-    AnimatedSprite* animatedSprite = new AnimatedSprite(sf::seconds(0.2));
+    AnimatedSprite* animatedSprite = new AnimatedSprite(sf::seconds(0.2f));
     animatedSprite->setAnimation(*walkingAnimation);
 //    animatedSprite.setColor(sf::Color::Red);
     animatedSprite->setPosition(100, 100);
@@ -42,7 +42,7 @@ void PlayState::resume()
 void PlayState::update()
 {
 	sf::Event event;
-	AnimatedSprite& animatedSprite =  dynamic_cast<AnimatedSprite&> (dmanager.get("sprite"));
+	AnimatedSprite& animatedSprite =  dmanager.get<AnimatedSprite>("sprite");
 	animatedSprite.update(clock.restart());
 	while( m_game.getScreen().pollEvent( event ) )
 	{
