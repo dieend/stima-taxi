@@ -15,12 +15,9 @@
 /* IN  : reference of the two operands				*/
 /* OUT : result Point						*/
 /*--------------------------------------------------------------*/
-Point operator+(Point a, Point b)
+Point& operator+(const Point& a, const Point& b)
 {
-	Point sum;
-	sum.x = a.x + b.x;
-	sum.y = a.y + b.y;
-	return sum;
+	return *new Point(a.x + b.x, a.y + b.y);
 }
 
 /*--------------- Overloaded binary - operator	----------------*/
@@ -28,12 +25,9 @@ Point operator+(Point a, Point b)
 /* IN  : reference of the two operands				*/
 /* OUT : result Point						*/
 /*--------------------------------------------------------------*/
-Point operator-(Point a, Point b)
+Point& operator-(const Point& a,const Point& b)
 {
-	Point dif;
-	dif.x = a.x - b.x;
-	dif.y = a.y - b.y;
-	return dif;
+	return *new Point(a.x - b.x,a.y - b.y);
 }
 
 /*-------------- Overloaded unary - operator -------------------*/
@@ -41,12 +35,9 @@ Point operator-(Point a, Point b)
 /* IN  : operand						*/
 /* OUT : negated Point						*/
 /*--------------------------------------------------------------*/
-Point operator-(Point a)
+Point& operator-(const Point& a)
 {
-	Point neg;
-	neg.x = -a.x;
-	neg.y = -a.y;
-	return neg;
+	return *new Point(-a.x,-a.y);
 }
 
 /*------------------ Overloaded * operator  --------------------*/
@@ -54,20 +45,14 @@ Point operator-(Point a)
 /* IN  : Point and scalar operand				*/
 /* OUT : result Point						*/
 /*--------------------------------------------------------------*/
-Point operator*(Point a, double s)
+Point& operator*(const Point& a, double s)
 {
-	Point scaled;
-	scaled.x = s * a.x;
-	scaled.y = s * a.y;
-	return scaled;
+	return *new Point(s * a.x,s * a.y);
 }
 
-Point operator*(double s, Point a)
+Point& operator*(double s,const Point& a)
 {
-	Point scaled;
-	scaled.x = s * a.x;
-	scaled.y = s * a.y;
-	return scaled;
+	return *new Point(s * a.x,s * a.y);
 }
 
 /*------------------------- Size -------------------------------*/

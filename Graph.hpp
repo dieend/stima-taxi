@@ -11,6 +11,9 @@
 #include <string>
 #include "Point.hpp"
 #include "Rectangle.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <fstream>
 typedef char TYPE;
 
 /************************************************************************/
@@ -29,7 +32,7 @@ public:
     Point& Force( void )	     { return force;	    }
 
     void   AddForce( Point f )     { force += f;	    }
-
+	void SetPosition(const Point& post) {pos = post;}
     std::string  GetName( void )	     { return name;	    }
     TYPE   GetType( void )	     { return type;	    }
 };
@@ -37,7 +40,7 @@ public:
 /************************************************************************/
 class Relation {
 /************************************************************************/
-    char     name[MAXNAME + 1];	   // relation name
+    std::string	name;	   // relation name
     double   intensity;		   // relation intensity
     Node   * relation_to;	   // related node
 public:
@@ -102,12 +105,12 @@ public:
     std::string	 GetRelationName( void ); // get name of currelation
     bool	 AddNode( std::string, TYPE );  // add new node to the list
     void	 AddRelation( std::string, double ); // add new relation
-    bool	 SearchNode( std::string );	  // search node by name
+    bool	 SearchNode( const std::string& );	  // search node by name
     bool	 RelSearchNode( std::string );
     int		 SearchRelation( void );  // search relation of currnode and relatenode
 
     bool	 SaveNodes( std::string );	  // save to a file
-    void	 RestoreNodes( std::string );	  // restore from file
+    void	 RestoreNodes(const std::string& );	  // restore from file
 
     int		 Placement( void );	  // place nodes step-by-step
     void	 RandomArrange( void );	  // arrange nodes randomly
@@ -129,6 +132,8 @@ class ObjectSpace : public Graph {
     Rectangle	     vwindow;	    // object space window
     Rectangle	     viewport;	    // viewport
     void	     SetScale( void );	// calculate scale from vwindow and viewport
+	void ShowRelation(sf::RenderWindow&);
+	void ShowNode(sf::RenderWindow&);
 public:
 	   ObjectSpace( void );
 
@@ -138,4 +143,5 @@ public:
     Point  ScreenPos( Point );	       // window -> viewport transform
     Point  ScreenPos( void )	      { return ScreenPos( GetNode( ) );	   }
     Point  RelScreenPos( void )	      { return ScreenPos( GetRelateNode() );}
+	void Draw(sf::RenderWindow&);
 };

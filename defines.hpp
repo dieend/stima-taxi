@@ -11,8 +11,8 @@
 */
 #define OVERWINDOW_X		 1000.0
 #define OVERWINDOW_Y		 1000.0
-#define WINDOW_WIDTH 500.0
-#define WINDOW_HEIGHT 500.0
+#define WINDOW_WIDTH 640.0
+#define WINDOW_HEIGHT 480.0
 #define WALL_MARGIN		 (OVERWINDOW_X / 10.0)
 
 /*

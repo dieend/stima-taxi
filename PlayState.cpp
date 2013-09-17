@@ -27,6 +27,9 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
 //    animatedSprite.setColor(sf::Color::Red);
     animatedSprite->setPosition(100, 100);
 	dmanager.put("sprite",animatedSprite,1);
+
+	graph = ObjectSpace();
+	graph.RestoreNodes("a.txt");
 }
 
 void PlayState::pause()
@@ -65,6 +68,7 @@ void PlayState::update()
 void PlayState::draw()
 {
 	m_game.getScreen().clear();
-	dmanager.draw(m_game.getScreen());
+//	dmanager.draw(m_game.getScreen());
+	graph.Draw(m_game.getScreen());
 	m_game.getScreen().display();
 }

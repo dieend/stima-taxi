@@ -9,6 +9,7 @@
 #include "ResourceManager.hpp"
 #include "AnimatedSprite.hpp"
 #include "GameEngine.hpp"
+#include "Graph.hpp"
 class GameEngine;
 
 class PlayState : public GameState
@@ -23,5 +24,6 @@ public:
 	void draw();
 private:
 	DrawableManager dmanager;
+	ObjectSpace graph;
 	sf::Clock clock;
 };

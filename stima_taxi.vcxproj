@@ -82,22 +82,31 @@
   <ItemGroup>
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="City.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DrawableManager.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayState.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TitleState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.hpp" />
     <ClInclude Include="Animation.hpp" />
+    <ClInclude Include="City.h" />
     <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="defines.hpp" />
     <ClInclude Include="DrawableManager.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="Graph.hpp" />
     <ClInclude Include="PlayState.hpp" />
+    <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Rectangle.hpp" />
     <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="TitleState.hpp" />
   </ItemGroup>

@@ -36,7 +36,7 @@ Relation :: Relation( std::string nname, Node * np, double r )
 /*--------------------------------------------------------------*/
 void Relation :: SetRelation( std::string nname, double r )
 {
-    strcpy( name, nname );
+    name = nname;
     intensity = r;
 }
 
@@ -125,9 +125,34 @@ Graph :: Graph()
 /* SIDE EFFECT: - node-relation data structure is destroyed	*/
 /*		  then it is restored from the given file	*/
 /*--------------------------------------------------------------*/
-void Graph :: RestoreNodes ( std::string file_name )
+void Graph :: RestoreNodes (const std::string& file_name )
 {
-    // TODO
+	std::ifstream input;
+	input.open(file_name);
+	int n;
+	input >> n;
+	std::string kota[100];
+	for (int i=0; i<n; i++) {
+		double x = (OVERWINDOW_X - WALL_MARGIN * 2.0) /
+					(double)RAND_MAX * (double)rand() + WALL_MARGIN;
+		double y = (OVERWINDOW_Y - WALL_MARGIN * 2.0) /
+					(double)RAND_MAX * (double)rand() + WALL_MARGIN;
+		input >> kota[i];
+		AddNode(kota[i], MOVEABLE_NODE);
+		currnode->SetPosition(Point(x,y));
+	}
+	for (int i=0; i<n; i++) {
+		SearchNode(kota[i]) ;
+		for (int j=0; j<n; j++) {
+			double distance;
+			input >> distance;
+			if ((i!=j) && (distance != -1)) {
+				NodeElem * tmpnode = currnode;				RelSearchNode( kota[j] );				AddRelation("" , distance);				currnode = tmpnode;
+			}
+		}
+	}
+	
+	input.close();
 }
 
 /*------------------  SaveNodes	  ----------------------------*/
@@ -137,7 +162,8 @@ void Graph :: RestoreNodes ( std::string file_name )
 /*--------------------------------------------------------------*/
 bool Graph :: SaveNodes ( std::string file_name )
 {
-    // TODO
+	//TODO
+    return false;
 }
 
 
@@ -228,11 +254,11 @@ bool Graph :: AddNode ( std::string name, char type )
 /* OUT : is there node having this name ?		      */
 /* SIDE EFFECT: currnode is set to the found node.	      */
 /*------------------------------------------------------------*/
-bool Graph :: SearchNode ( std::string name )
+bool Graph :: SearchNode (const std::string& name )
 {
     if ( !FirstNode() ) return false;
     do {
-	if ( strcmp( currnode -> GetName(), name) == 0 ) return true;
+	if ( currnode -> GetName() == name ) return true;
     } while ( NextNode () );
 
     return false;
@@ -410,11 +436,11 @@ bool Graph :: NextNode ( int maxsernum )
 bool Graph :: FirstRelation ( )
 {
     if ( (currelation = currnode -> GetRelation()) == NULL ) {
-	relatenode = NULL;
-	return false;
+		relatenode = NULL;
+		return false;
     } else {
-	relatenode = (NodeElem *)( currelation -> GetOtherNode() );
-	return true;
+		relatenode = (NodeElem *)( currelation -> GetOtherNode() );
+		return true;
     }
 }
 
@@ -513,4 +539,28 @@ Point ObjectSpace :: ScreenPos( Point p )
 Point ObjectSpace :: ScreenPos( NodeElem * pnode )
 {
     return ScreenPos( pnode -> Position() );
+}
+
+void ObjectSpace :: Draw(sf::RenderWindow& canvas)
+{
+	if ( !FirstNode() ) return;    do {	if ( FirstRelation() ) {	    do ShowRelation(canvas); while ( NextRelation() );	}    } while ( NextNode() );
+
+    if ( !FirstNode() ) return;    do ShowNode(canvas); while ( NextNode() );
+}
+void ObjectSpace :: ShowRelation(sf::RenderWindow& canvas){
+	sf::Vertex line[] =
+	{
+		sf::Vertex(sf::Vector2f(ScreenPos().X(), ScreenPos().Y())),
+		sf::Vertex(sf::Vector2f(RelScreenPos().X(), RelScreenPos().Y()))
+	};
+	line[0].color =  sf::Color::Red;
+	line[1].color =  sf::Color::Red;
+	
+	canvas.draw(line, 2, sf::Lines);
+}
+void ObjectSpace :: ShowNode(sf::RenderWindow& canvas){
+	sf::RectangleShape node(sf::Vector2f(NODESIZE_X, NODESIZE_Y));
+	node.setPosition(ScreenPos().X() - NODESIZE_X / 2, ScreenPos().Y() - NODESIZE_Y / 2);
+	node.setFillColor(sf::Color::White);
+	canvas.draw(node);
 }

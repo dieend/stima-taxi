@@ -32,5 +32,3 @@ T& DrawableManager::get(const std::string& key)
 {
 	return dynamic_cast<T&> (*allDrawables[key]);
 }
-
-#endif

@@ -1,7 +1,7 @@
 #include "City.h"
 
 
-City::City(void)
+City::City(std::string name, int pos, int y)
 {
 }
 
