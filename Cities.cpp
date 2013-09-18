@@ -24,7 +24,7 @@ void Cities::addRoad(int i, int j,int distance)
 	Road* r = new Road(*allCitiesIndexed[i],*allCitiesIndexed[j]);
 	r->setDistance(distance);
 	allRoad[i][j] = r;
-	
+	allRoad[j][i] = r;
 }
 void Cities::addCity(const std::string& cityName)
 {
@@ -38,7 +38,18 @@ void Cities::addCity(const std::string& cityName)
 		}
 	}
 }
-
+void Cities::draw(sf::RenderWindow& canvas){
+	for (int i=0; i<allRoad.size(); i++) {
+		for (int j=0; j<allRoad[i].size(); j++) {
+			if (int(allRoad[i][j]) != 0) {
+				allRoad[i][j]->draw(canvas);
+			}
+		}
+	}
+	for (CitiesContainerIterator it = allCities.begin(); it!= allCities.end(); it++) {
+		(it->second)->draw(canvas);
+	}
+}
 
 City::City(const std::string& name)
 {
@@ -62,8 +73,17 @@ void City::draw(sf::RenderWindow& canvas){
 	canvas.draw(node);
 }
 
+bool City::operator==(const City& c) const{
+	return mName == c.mName;
+}
 
-Road::Road(const City& a,const City& b):A(a),B(b){}
+Road::Road(const City& a,const City& b):A(a),B(b){
+	if (A.operator==(B)) {
+		mDistance = 0;
+	} else {
+		mDistance = -1;
+	}
+}
 
 Road::~Road(void){}
 

@@ -15,6 +15,7 @@ public:
 	void draw(sf::RenderWindow&);
 	double getX() const {return px;};
 	double getY() const  {return py;};
+	bool operator==(const City& c) const;
 private:
 	double px, py;
 	std::string mName;
@@ -38,11 +39,13 @@ class Cities
 	typedef std::map<std::string, City*> CitiesContainer;
 	typedef CitiesContainer::iterator CitiesContainerIterator;
 	typedef std::vector<std::vector<Road* > > RoadContainer;
+	typedef RoadContainer::iterator RoadContainerIterator;
 public:
 	Cities(void);
 	void setCityPosition(const std::string& name, double x, double y);
 	void addRoad(int i, int j, int distance);
 	void addCity(const std::string&);
+	void draw(sf::RenderWindow&);
 	~Cities(void);
 private:
 	CitiesContainer allCities;

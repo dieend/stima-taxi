@@ -70,6 +70,7 @@ void PlayState::draw()
 {
 	m_game.getScreen().clear();
 //	dmanager.draw(m_game.getScreen());
-	graph.Draw(m_game.getScreen());
+	//graph.Draw(m_game.getScreen());
+	mCities.draw(m_game.getScreen());
 	m_game.getScreen().display();
 }
