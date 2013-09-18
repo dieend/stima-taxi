@@ -14,6 +14,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
+#include "Cities.hpp"
 typedef char TYPE;
 
 /************************************************************************/
@@ -84,18 +85,20 @@ class Graph {
 /************************************************************************/
     int		   nfixnode;	     // number of fix nodes
     int		   nmovnode;	     // number of movable nodes
+protected:
     NodeElem *	   currnode;	     // current node
     NodeElem *	   relatenode;	     // actual relation of curr
     NodeElem *	   start_node;	     // start of list
     NodeElem *	   last_node;	     // end of list
     RelationElem * currelation;	     // relation of nodes list
     RelationElem * prevrelation;     // previous to currelation
+	Cities& mCities;
 
     void	 SwapRelation( void );	  // swap currnode and relatenode
 					  // if currnode is further in the
 					  // list
 public:
-		 Graph( void );
+		 Graph( Cities& cities);
 
     void	 SetNodePos( Point );	  // sets position of currnode
     void	 SetRelation( double );	  // sets intensity of currelation
@@ -121,7 +124,7 @@ public:
     bool	 NextNode( int max = ALL_NODES ); // select next to currnode
     bool	 FirstRelation( void );	  // select first relation of currnode
     bool	 NextRelation( void );	  // select next relation
-
+	void Convert(void);
 };
 
 /************************************************************************/
@@ -135,7 +138,7 @@ class ObjectSpace : public Graph {
 	void ShowRelation(sf::RenderWindow&);
 	void ShowNode(sf::RenderWindow&);
 public:
-	   ObjectSpace( void );
+	   ObjectSpace( Cities& cities );
 
     void   SetViewPort( Rectangle );
 

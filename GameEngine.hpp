@@ -24,16 +24,17 @@
 #include <stack>
 #include <string>
 #include <memory>
-
+#include "defines.hpp"
 #include <SFML/Graphics.hpp>
+
 
 class GameState;
 
 class GameEngine
 {
 public:
-	GameEngine(const std::string& title, const unsigned int width = 640, 
-		const unsigned int height = 480, const unsigned int bpp = 32, const bool fullscreen = false);
+	GameEngine(const std::string& title, const unsigned int width = WINDOW_WIDTH, 
+		const unsigned int height = WINDOW_HEIGHT, const unsigned int bpp = 32, const bool fullscreen = false);
 
 	void run(std::unique_ptr<GameState> state);
 

@@ -25,5 +25,6 @@ public:
 private:
 	DrawableManager dmanager;
 	ObjectSpace graph;
+	Cities mCities;
 	sf::Clock clock;
 };

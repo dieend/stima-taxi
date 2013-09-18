@@ -1,5 +1,7 @@
+#include "defines.hpp"
 #include "GameEngine.hpp"
 #include "TitleState.hpp"
+
 
 int main ()
 {

@@ -1,5 +1,5 @@
 #include "PlayState.hpp"
-PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replace )
+PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replace ), graph(mCities)
 {
 	std::cout << "PlayState Init" << std::endl;
 	sf::CircleShape* shape = new sf::CircleShape(50.f);
@@ -28,8 +28,9 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
     animatedSprite->setPosition(100, 100);
 	dmanager.put("sprite",animatedSprite,1);
 
-	graph = ObjectSpace();
 	graph.RestoreNodes("a.txt");
+	graph.Placement();
+	graph.Convert();
 }
 
 void PlayState::pause()
