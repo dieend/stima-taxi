@@ -83,7 +83,6 @@
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Cities.cpp" />
-    <ClCompile Include="City.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DrawableManager.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -99,7 +98,6 @@
     <ClInclude Include="AnimatedSprite.hpp" />
     <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Cities.hpp" />
-    <ClInclude Include="City.h" />
     <ClInclude Include="Collision.hpp" />
     <ClInclude Include="defines.hpp" />
     <ClInclude Include="DrawableManager.hpp" />
