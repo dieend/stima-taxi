@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include "Algorithm.hpp"
+#include <list>
 #include <vector>
 #include <map>
 #include <SFML/Graphics.hpp>
@@ -27,6 +30,7 @@ public:
 	Road(const City& A,const City& B);
 	~Road(void);
 	void setDistance(double);
+	double getDistance() const;
 	void draw(sf::RenderWindow&);
 private:
 	double mDistance;
@@ -40,15 +44,20 @@ class Cities
 	typedef CitiesContainer::iterator CitiesContainerIterator;
 	typedef std::vector<std::vector<Road* > > RoadContainer;
 	typedef RoadContainer::iterator RoadContainerIterator;
+	typedef std::list<int> Route;
+	typedef std::vector<std::vector<Route* > >* RouteContainer;
+
 public:
 	Cities(void);
 	void setCityPosition(const std::string& name, double x, double y);
 	void addRoad(int i, int j, int distance);
 	void addCity(const std::string&);
 	void draw(sf::RenderWindow&);
+	void computeWarshal();
 	~Cities(void);
 private:
 	CitiesContainer allCities;
 	RoadContainer allRoad;
+	RouteContainer allRoute;
 	std::vector<const City*> allCitiesIndexed;
 };

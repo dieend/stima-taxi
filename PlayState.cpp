@@ -31,6 +31,7 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
 	graph.RestoreNodes("a.txt");
 	graph.Placement();
 	graph.Convert();
+	mCities.computeWarshal();
 }
 
 void PlayState::pause()

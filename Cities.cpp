@@ -32,15 +32,15 @@ void Cities::addCity(const std::string& cityName)
 	allCities[cityName] = c;
 	allCitiesIndexed.push_back(c);
 	allRoad.push_back(std::vector<Road*>());
-	for (int i=0; i<allRoad.size(); i++) {
-		for (int j=allRoad[i].size(); j<allRoad.size(); j++) {
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		for (unsigned int j=allRoad[i].size(); j<allRoad.size(); j++) {
 			allRoad[i].push_back(NULL);
 		}
 	}
 }
 void Cities::draw(sf::RenderWindow& canvas){
-	for (int i=0; i<allRoad.size(); i++) {
-		for (int j=0; j<allRoad[i].size(); j++) {
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		for (unsigned int j=i+1; j<allRoad[i].size(); j++) {
 			if (int(allRoad[i][j]) != 0) {
 				allRoad[i][j]->draw(canvas);
 			}
@@ -49,6 +49,38 @@ void Cities::draw(sf::RenderWindow& canvas){
 	for (CitiesContainerIterator it = allCities.begin(); it!= allCities.end(); it++) {
 		(it->second)->draw(canvas);
 	}
+}
+
+void Cities::computeWarshal() {
+	int ** dist = new int*[allRoad.size()];
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		dist[i] = new int[allRoad.size()];
+	}
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		for (unsigned int j=0; j<allRoad[i].size(); j++) {
+			if (i==j) {
+				dist[i][j] = 0;
+			} else if (int(allRoad[i][j]) != 0) {
+				dist[i][j] = allRoad[i][j]->getDistance();
+			} else {
+				dist[i][j] = INF;
+			}
+		}
+	}
+	allRoute = Algorithm::computeFloydWarshall(dist,allRoad.size());
+	for (unsigned int i=0; i<allRoute->size(); i++) {
+		for (unsigned int j=0; j<(*allRoute)[i].size(); j++) {
+			std::cout << i << " to " << j << std::endl;
+			for (Route::iterator it = (*allRoute)[i][j]->begin(); it != (*allRoute)[i][j]->end(); it++) {
+				std::cout << *it << " ";
+			}
+			std::cout << std::endl;
+		}
+	}
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		delete[] dist[i];
+	}
+	delete [] dist;
 }
 
 City::City(const std::string& name)
@@ -86,7 +118,9 @@ Road::Road(const City& a,const City& b):A(a),B(b){
 }
 
 Road::~Road(void){}
-
+double Road::getDistance() const {
+	return mDistance;
+}
 void Road::draw(sf::RenderWindow& canvas){
 	sf::Vertex line[] =
 	{
