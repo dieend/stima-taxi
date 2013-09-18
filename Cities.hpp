@@ -2,14 +2,21 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <SFML/Graphics.hpp>
 
 class City
 {
 public:
+	const static int NODE_SIZE_X = 20;
+	const static int NODE_SIZE_Y = 20;
 	City(const std::string& name);
 	void setPosition(double x, double y);
 	~City(void);
+	void draw(sf::RenderWindow&);
+	double getX() const {return px;};
+	double getY() const  {return py;};
 private:
+	double px, py;
 	std::string mName;
 };
 
@@ -19,15 +26,18 @@ public:
 	Road(const City& A,const City& B);
 	~Road(void);
 	void setDistance(double);
+	void draw(sf::RenderWindow&);
 private:
 	double mDistance;
+	const City& A;
+	const City& B;
 };
 
 class Cities
 {
 	typedef std::map<std::string, City*> CitiesContainer;
 	typedef CitiesContainer::iterator CitiesContainerIterator;
-	typedef std::map<std::string, Road*> RoadContainer;
+	typedef std::vector<std::vector<Road* > > RoadContainer;
 public:
 	Cities(void);
 	void setCityPosition(const std::string& name, double x, double y);
