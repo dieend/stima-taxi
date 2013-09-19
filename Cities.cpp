@@ -17,9 +17,9 @@ Cities::~Cities(void)
 			delete allRoad[i][j];
 		}
 	}
-	for (unsigned int i=0; i<allRoute->size(); i++) {
-		for (unsigned int j=0; i<(*allRoute)[i].size(); j++) {
-			delete (*allRoute)[i][j];
+	for (unsigned int i=0; i<allRoute.size(); i++) {
+		for (unsigned int j=0; i<allRoute[i].size(); j++) {
+			delete allRoute[i][j];
 		}
 	}
 }
@@ -66,7 +66,9 @@ void Cities::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 		target.draw(*(it->second));
 	}
 }
-
+Cities::RouteCity* Cities::getRoute(int i, int j) {
+	return allRoute[i][j];
+}
 void Cities::computeWarshal() {
 	double ** dist = new double*[allRoad.size()];
 	for (unsigned int i=0; i<allRoad.size(); i++) {
@@ -83,13 +85,17 @@ void Cities::computeWarshal() {
 			}
 		}
 	}
-	allRoute = Algorithm::computeFloydWarshall(dist,allRoad.size());
-	for (unsigned int i=0; i<allRoute->size(); i++) {
-		for (unsigned int j=0; j<(*allRoute)[i].size(); j++) {
+	std::vector<std::vector<Route* > >* rawRoutes = Algorithm::computeFloydWarshall(dist,allRoad.size());
+	for (unsigned int i=0; i<rawRoutes->size(); i++) {
+		allRoute.push_back(std::vector<RouteCity* >());
+		for (unsigned int j=0; j<(*rawRoutes)[i].size(); j++) {
+			RouteCity* r = new RouteCity();
 			std::cout << i << " to " << j << std::endl;
-			for (Route::iterator it = (*allRoute)[i][j]->begin(); it != (*allRoute)[i][j]->end(); it++) {
+			for (Route::iterator it = (*rawRoutes)[i][j]->begin(); it != (*rawRoutes)[i][j]->end(); it++) {
+				r->push_back(allCitiesIndexed[*it]);
 				std::cout << *it << " ";
 			}
+			allRoute[i].push_back(r);
 			std::cout << std::endl;
 		}
 	}
@@ -113,7 +119,9 @@ void City::setPosition(double x, double y){
 	px = x;
 	py = y;
 }
-
+sf::FloatRect City::getRectangle() {
+	return sf::FloatRect(px-NODE_SIZE_X/2,py-NODE_SIZE_Y/2,NODE_SIZE_X,NODE_SIZE_Y);
+}
 void City::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape node(sf::Vector2f(City::NODE_SIZE_X, City::NODE_SIZE_Y));
 	node.setPosition(px - City::NODE_SIZE_X / 2, py - City::NODE_SIZE_Y / 2);

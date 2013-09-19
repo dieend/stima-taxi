@@ -1,14 +1,20 @@
 #include "Taxi.hpp"
 
 
-Taxi::Taxi(City* location)
+Taxi::Taxi(City* _startLocation, double _speed, double _comfortness, sf::Time frameTime) : startLocation(_startLocation),m_frameTime(frameTime)
 {
-	currentLocation = location;
+	currentLocation = _startLocation;
+	speed = _speed;
+	comfortness = _comfortness;
 	shape = new sf::RectangleShape(sf::Vector2f(30,45));
-	shape->setPosition(currentLocation->getX(), currentLocation->getY());
+	x = (float)currentLocation->getX();
+	y = (float)currentLocation->getY();
 	shape->setFillColor(sf::Color::Blue);
 	shape->setOutlineColor(sf::Color::Yellow);
 	shape->setOutlineThickness(2.0f);
+	currentRoute = NULL;
+	currentDestination = NULL;
+	currentPreviousLocation = NULL;
 }
 
 
@@ -19,13 +25,55 @@ Taxi::~Taxi(void)
 
 void Taxi::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	shape->setPosition(x,y);
 	target.draw(*shape);
 }
 
-void Taxi::assignRoute(Cities::Route*)
+void Taxi::assignRoute(Cities::RouteCity* r)
 {
+	currentRoute = r;
 }
-void Taxi::update(){
+void Taxi::update(sf::Time deltaTime){
 	updateLocation();
+	updateCurrentCity();
+	    // add delta time
+    m_currentTime += deltaTime;
+
+    // if current time is bigger then the frame time advance one frame
+    if(m_currentTime >= m_frameTime)
+    {
+        // reset time, but keep the remainder
+        m_currentTime = sf::microseconds(m_currentTime.asMicroseconds() % m_frameTime.asMicroseconds());
+		if (currentDestination != NULL) {
+			x =(**currentDestination)->getX();
+			y =(**currentDestination)->getY();
+		}
+    }
 }
-void Taxi::updateLocation(){}
+void Taxi::updateCurrentCity(){
+	if (int(currentDestination) != NULL) {
+		if (Collision::pointOverFloatRect(x,y,(**currentDestination)->getRectangle())) {
+			currentLocation = **currentDestination;
+		}
+	}
+}
+void Taxi::updateLocation(){
+	if (int(currentRoute) != NULL) {
+		if (int(currentPreviousLocation) != NULL) {
+			std::cout << x << " " << y << std::endl;
+			if (*currentLocation == ***currentDestination) {
+				(*currentPreviousLocation)++;
+				(*currentDestination)++;
+			}
+		} else {
+			currentPreviousLocation = new Cities::RouteCity::const_iterator(currentRoute->begin());
+			currentDestination =new Cities::RouteCity::const_iterator(currentRoute->begin());
+			(*currentDestination)++;
+		}
+		if (*currentDestination == currentRoute->end()) {
+			currentRoute = NULL;
+			currentDestination = NULL;
+			currentPreviousLocation = NULL;
+		}
+	}
+}

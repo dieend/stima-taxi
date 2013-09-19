@@ -32,7 +32,8 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
 	graph->Placement();
 	graph->Convert();
 	mCities.computeWarshal();
-	taxi = new Taxi(mCities.getCity(0));
+	taxi = new Taxi(mCities.getCity(0),0,0,sf::seconds(2.0f));
+	taxi->assignRoute(mCities.getRoute(0,2));
 	dmanager.put("city", &mCities, 2);
 	dmanager.put("taxi", taxi, 3);
 }
@@ -51,7 +52,8 @@ void PlayState::update()
 {
 	sf::Event event;
 	AnimatedSprite& animatedSprite =  dmanager.get<AnimatedSprite>("sprite");
-	animatedSprite.update(clock.restart());
+	animatedSprite.update(clock.getElapsedTime());
+	taxi->update(clock.restart());
 	while( m_game.getScreen().pollEvent( event ) )
 	{
 		switch( event.type )

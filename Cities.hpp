@@ -18,6 +18,7 @@ public:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	double getX() const {return px;};
 	double getY() const  {return py;};
+	sf::FloatRect getRectangle();
 	bool operator==(const City& c) const;
 private:
 	double px, py;
@@ -42,11 +43,12 @@ class Cities : public sf::Drawable
 {
 public:
 	typedef std::list<int> Route;
+	typedef std::list<City*> RouteCity;
 private:
 	typedef std::map<std::string, City*> CitiesContainer;
 	typedef CitiesContainer::const_iterator CitiesContainerIterator;
 	typedef std::vector<std::vector<Road* > > RoadContainer;
-	typedef std::vector<std::vector<Route* > > RouteContainer;
+	typedef std::vector<std::vector<RouteCity* > > RouteContainer;
 
 public:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -56,11 +58,12 @@ public:
 	void addCity(const std::string&);
 	City* getCity(int i);
 	City* getCity(std::string);
+	RouteCity* getRoute(int i, int j);
 	void computeWarshal();
 	~Cities(void);
 private:
 	CitiesContainer allCities;
 	RoadContainer allRoad;
-	RouteContainer* allRoute;
+	RouteContainer allRoute;
 	std::vector<City*> allCitiesIndexed;
 };
