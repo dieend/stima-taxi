@@ -1,8 +1,8 @@
 #include "Algorithm.hpp"
 
 //dist must be INF if infinite
-int** dist = NULL;
-Algorithm::RouteContainer Algorithm::computeFloydWarshall(int** distance, int n)
+static double** dist = NULL;
+Algorithm::RouteContainer Algorithm::computeFloydWarshall(double** distance, int n)
 {
 	if (dist != distance) {
 		delete dist;

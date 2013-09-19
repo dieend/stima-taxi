@@ -154,26 +154,38 @@ void Graph :: RestoreNodes (const std::string& file_name )
 	int n;
 	input >> n;
 	std::cout << n;
-	std::string kota[100];
+	std::vector<std::string> kota(n);
 	for (int i=0; i<n; i++) {
+		input >> kota[i];
+	}
+	std::vector<std::vector<double> > dist(n,std::vector<double>(n));
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<n; j++) {
+			input >> dist[i][j];
+		}
+	}
+	RestoreNodes(kota, dist);
+	input.close();
+}
+
+void Graph::RestoreNodes(const std::vector<std::string>& cities, const std::vector<std::vector<double> >& dist) {
+	for (unsigned int i=0; i<cities.size(); i++) {
 		double x = (OVERWINDOW_X - WALL_MARGIN * 2.0) /
 					(double)RAND_MAX * (double)rand() + WALL_MARGIN;
 
 		double y = (OVERWINDOW_Y - WALL_MARGIN * 2.0) /
 					(double)RAND_MAX * (double)rand() + WALL_MARGIN;
-		input >> kota[i];
-		mCities.addCity(kota[i]);
-		AddNode(kota[i], MOVEABLE_NODE);
+		mCities.addCity(cities[i]);
+		AddNode(cities[i], MOVEABLE_NODE);
 		currnode->SetPosition(Point(x,y));
 	}
-	for (int i=0; i<n; i++) {
-		SearchNode(kota[i]) ;
-		for (int j=0; j<n; j++) {
-			double distance;
-			input >> distance;
+	for (int i=0; i<dist.size(); i++) {
+		SearchNode(cities[i]) ;
+		for (int j=i+1; j<dist[i].size(); j++) {
+			double distance = dist[i][j];
 			if ((i!=j) && (distance != -1)) {
 				NodeElem * tmpnode = currnode;
-				RelSearchNode( kota[j] );
+				RelSearchNode( cities[j] );
 				char numstr[21]; // enough to hold all numbers up to 64-bits
 				std::string rel_name = "";
 				rel_name = rel_name + _itoa(i, numstr, 10) ;
@@ -185,10 +197,7 @@ void Graph :: RestoreNodes (const std::string& file_name )
 			}
 		}
 	}
-	
-	input.close();
 }
-
 /*------------------  SaveNodes	  ----------------------------*/
 /* Saves the node-relation data structure to a file name      */
 /* The file type is TEXT.					*/

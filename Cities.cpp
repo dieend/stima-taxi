@@ -52,9 +52,9 @@ void Cities::draw(sf::RenderWindow& canvas){
 }
 
 void Cities::computeWarshal() {
-	int ** dist = new int*[allRoad.size()];
+	double ** dist = new double*[allRoad.size()];
 	for (unsigned int i=0; i<allRoad.size(); i++) {
-		dist[i] = new int[allRoad.size()];
+		dist[i] = new double[allRoad.size()];
 	}
 	for (unsigned int i=0; i<allRoad.size(); i++) {
 		for (unsigned int j=0; j<allRoad[i].size(); j++) {

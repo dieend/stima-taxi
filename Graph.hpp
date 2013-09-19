@@ -114,6 +114,7 @@ public:
 
     bool	 SaveNodes( std::string );	  // save to a file
     void	 RestoreNodes(const std::string& );	  // restore from file
+	void	 RestoreNodes(const std::vector<std::string>&, const std::vector<std::vector<double> >& );	  // restore from data
 
     int		 Placement( void );	  // place nodes step-by-step
     void	 RandomArrange( void );	  // arrange nodes randomly

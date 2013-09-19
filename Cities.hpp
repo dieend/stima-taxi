@@ -59,5 +59,5 @@ private:
 	CitiesContainer allCities;
 	RoadContainer allRoad;
 	RouteContainer allRoute;
-	std::vector<const City*> allCitiesIndexed;
+	std::vector<City*> allCitiesIndexed;
 };
