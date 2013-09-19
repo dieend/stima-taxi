@@ -40,14 +40,17 @@ private:
 
 class Cities
 {
+public:
+	typedef std::list<int> Route;
+private:
 	typedef std::map<std::string, City*> CitiesContainer;
 	typedef CitiesContainer::iterator CitiesContainerIterator;
 	typedef std::vector<std::vector<Road* > > RoadContainer;
 	typedef RoadContainer::iterator RoadContainerIterator;
-	typedef std::list<int> Route;
 	typedef std::vector<std::vector<Route* > >* RouteContainer;
 
 public:
+
 	Cities(void);
 	void setCityPosition(const std::string& name, double x, double y);
 	void addRoad(int i, int j, int distance);
