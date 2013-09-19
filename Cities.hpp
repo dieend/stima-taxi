@@ -7,7 +7,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 
-class City
+class City : public sf::Drawable
 {
 public:
 	const static int NODE_SIZE_X = 20;
@@ -15,7 +15,7 @@ public:
 	City(const std::string& name);
 	void setPosition(double x, double y);
 	~City(void);
-	void draw(sf::RenderWindow&);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	double getX() const {return px;};
 	double getY() const  {return py;};
 	bool operator==(const City& c) const;
@@ -24,43 +24,43 @@ private:
 	std::string mName;
 };
 
-class Road
+class Road : public sf::Drawable
 {
 public:
 	Road(const City& A,const City& B);
 	~Road(void);
 	void setDistance(double);
 	double getDistance() const;
-	void draw(sf::RenderWindow&);
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
 	double mDistance;
 	const City& A;
 	const City& B;
 };
 
-class Cities
+class Cities : public sf::Drawable
 {
 public:
 	typedef std::list<int> Route;
 private:
 	typedef std::map<std::string, City*> CitiesContainer;
-	typedef CitiesContainer::iterator CitiesContainerIterator;
+	typedef CitiesContainer::const_iterator CitiesContainerIterator;
 	typedef std::vector<std::vector<Road* > > RoadContainer;
-	typedef RoadContainer::iterator RoadContainerIterator;
-	typedef std::vector<std::vector<Route* > >* RouteContainer;
+	typedef std::vector<std::vector<Route* > > RouteContainer;
 
 public:
-
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	Cities(void);
 	void setCityPosition(const std::string& name, double x, double y);
 	void addRoad(int i, int j, int distance);
 	void addCity(const std::string&);
-	void draw(sf::RenderWindow&);
+	City* getCity(int i);
+	City* getCity(std::string);
 	void computeWarshal();
 	~Cities(void);
 private:
 	CitiesContainer allCities;
 	RoadContainer allRoad;
-	RouteContainer allRoute;
+	RouteContainer* allRoute;
 	std::vector<City*> allCitiesIndexed;
 };

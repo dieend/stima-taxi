@@ -9,7 +9,7 @@ class DrawableManager {
 public:
 	typedef std::map<std::string,sf::Drawable*> DrawableContainer;
 	typedef std::vector<DrawableContainer> DrawableLayer; // drew from priority 1 (the most back location)
-	typedef DrawableContainer::iterator DrawableContainerIterator;
+	typedef DrawableContainer::const_iterator DrawableContainerIterator;
 
 	template <typename T>
 	T& get(const std::string&);

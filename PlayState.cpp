@@ -1,5 +1,5 @@
 #include "PlayState.hpp"
-PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replace ), graph(mCities)
+PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replace )
 {
 	std::cout << "PlayState Init" << std::endl;
 	sf::CircleShape* shape = new sf::CircleShape(50.f);
@@ -27,11 +27,14 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
 //    animatedSprite.setColor(sf::Color::Red);
     animatedSprite->setPosition(100, 100);
 	dmanager.put("sprite",animatedSprite,1);
-
-	graph.RestoreNodes("a.txt");
-	graph.Placement();
-	graph.Convert();
+	Graph* graph = new Graph(mCities);
+	graph->RestoreNodes("a.txt");
+	graph->Placement();
+	graph->Convert();
 	mCities.computeWarshal();
+	taxi = new Taxi(mCities.getCity(0));
+	dmanager.put("city", &mCities, 2);
+	dmanager.put("taxi", taxi, 3);
 }
 
 void PlayState::pause()
@@ -70,8 +73,7 @@ void PlayState::update()
 void PlayState::draw()
 {
 	m_game.getScreen().clear();
-//	dmanager.draw(m_game.getScreen());
+	dmanager.draw(m_game.getScreen());
 	//graph.Draw(m_game.getScreen());
-	mCities.draw(m_game.getScreen());
 	m_game.getScreen().display();
 }

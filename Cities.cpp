@@ -12,6 +12,16 @@ Cities::~Cities(void)
 	{
 		delete it->second;
 	}
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		for (unsigned int j=0; i<allRoad[i].size(); j++) {
+			delete allRoad[i][j];
+		}
+	}
+	for (unsigned int i=0; i<allRoute->size(); i++) {
+		for (unsigned int j=0; i<(*allRoute)[i].size(); j++) {
+			delete (*allRoute)[i][j];
+		}
+	}
 }
 
 void Cities::setCityPosition(const std::string& cityName, double x, double y)
@@ -38,16 +48,22 @@ void Cities::addCity(const std::string& cityName)
 		}
 	}
 }
-void Cities::draw(sf::RenderWindow& canvas){
+City* Cities::getCity(int i){
+	return allCitiesIndexed[i];
+}
+City* Cities::getCity(std::string s){
+	return allCities[s];
+}
+void Cities::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	for (unsigned int i=0; i<allRoad.size(); i++) {
 		for (unsigned int j=i+1; j<allRoad[i].size(); j++) {
 			if (int(allRoad[i][j]) != 0) {
-				allRoad[i][j]->draw(canvas);
+				target.draw(*allRoad[i][j]);
 			}
 		}
 	}
 	for (CitiesContainerIterator it = allCities.begin(); it!= allCities.end(); it++) {
-		(it->second)->draw(canvas);
+		target.draw(*(it->second));
 	}
 }
 
@@ -98,11 +114,11 @@ void City::setPosition(double x, double y){
 	py = y;
 }
 
-void City::draw(sf::RenderWindow& canvas){
+void City::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::RectangleShape node(sf::Vector2f(City::NODE_SIZE_X, City::NODE_SIZE_Y));
 	node.setPosition(px - City::NODE_SIZE_X / 2, py - City::NODE_SIZE_Y / 2);
 	node.setFillColor(sf::Color::White);
-	canvas.draw(node);
+	target.draw(node);
 }
 
 bool City::operator==(const City& c) const{
@@ -121,7 +137,7 @@ Road::~Road(void){}
 double Road::getDistance() const {
 	return mDistance;
 }
-void Road::draw(sf::RenderWindow& canvas){
+void Road::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	sf::Vertex line[] =
 	{
 		sf::Vertex(sf::Vector2f(A.getX(),A.getY())),
@@ -129,8 +145,7 @@ void Road::draw(sf::RenderWindow& canvas){
 	};
 	line[0].color =  sf::Color::Red;
 	line[1].color =  sf::Color::Red;
-	
-	canvas.draw(line, 2, sf::Lines);
+	target.draw(line, 2, sf::Lines, states);
 }
 void Road::setDistance(double d){
 	mDistance = d;

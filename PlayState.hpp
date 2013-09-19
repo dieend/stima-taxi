@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameState.hpp"
+#include "Taxi.hpp"
 #include "DrawableManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -24,7 +25,7 @@ public:
 	void draw();
 private:
 	DrawableManager dmanager;
-	ObjectSpace graph;
+	Taxi* taxi;
 	Cities mCities;
 	sf::Clock clock;
 };
