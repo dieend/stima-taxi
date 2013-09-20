@@ -66,4 +66,5 @@ private:
 	RoadContainer allRoad;
 	RouteContainer allRoute;
 	std::vector<City*> allCitiesIndexed;
+	double** dist;
 };

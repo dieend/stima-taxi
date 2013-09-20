@@ -22,6 +22,10 @@ Cities::~Cities(void)
 			delete allRoute[i][j];
 		}
 	}
+	for (unsigned int i=0; i<allRoad.size(); i++) {
+		delete[] dist[i];
+	}
+	delete [] dist;
 }
 
 void Cities::setCityPosition(const std::string& cityName, double x, double y)
@@ -99,10 +103,7 @@ void Cities::computeWarshal() {
 			std::cout << std::endl;
 		}
 	}
-	for (unsigned int i=0; i<allRoad.size(); i++) {
-		delete[] dist[i];
-	}
-	delete [] dist;
+	
 }
 
 City::City(const std::string& name)
