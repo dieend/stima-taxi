@@ -32,10 +32,11 @@ PlayState::PlayState( GameEngine& game, bool replace ) : GameState( game, replac
 	graph->Placement();
 	graph->Convert();
 	mCities.computeWarshal();
-	taxi = new Taxi(mCities.getCity(0),0,0,sf::seconds(2.0f));
+	taxi = new Taxi(mCities.getCity(0),2,0, sf::seconds(0.01f));
 	taxi->assignRoute(mCities.getRoute(0,2));
 	dmanager.put("city", &mCities, 2);
 	dmanager.put("taxi", taxi, 3);
+	dmanager.put("taxi2", new Taxi(mCities.getCity(1),0,0,sf::seconds(2.0f)), 3);
 }
 
 void PlayState::pause()

@@ -26,5 +26,6 @@ private:
 	Cities::RouteCity::const_iterator* currentPreviousLocation;
 	sf::Time m_frameTime;
     sf::Time m_currentTime;
+	double dx,dy;
     std::size_t m_currentFrame;
 };

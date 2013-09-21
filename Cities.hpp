@@ -43,7 +43,7 @@ class Cities : public sf::Drawable
 {
 public:
 	typedef std::list<int> Route;
-	typedef std::list<City*> RouteCity;
+	typedef std::list<std::pair<City*, int> > RouteCity;
 private:
 	typedef std::map<std::string, City*> CitiesContainer;
 	typedef CitiesContainer::const_iterator CitiesContainerIterator;

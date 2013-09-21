@@ -95,9 +95,11 @@ void Cities::computeWarshal() {
 		for (unsigned int j=0; j<(*rawRoutes)[i].size(); j++) {
 			RouteCity* r = new RouteCity();
 			std::cout << i << " to " << j << std::endl;
-			for (Route::iterator it = (*rawRoutes)[i][j]->begin(); it != (*rawRoutes)[i][j]->end(); it++) {
-				r->push_back(allCitiesIndexed[*it]);
-				std::cout << *it << " ";
+			Route::iterator prev = (*rawRoutes)[i][j]->begin();
+			for (Route::iterator next = (*rawRoutes)[i][j]->begin(); next != (*rawRoutes)[i][j]->end() && prev != (*rawRoutes)[i][j]->end(); next++) {
+				r->push_back(std::make_pair(allCitiesIndexed[*next],dist[*prev][*next]));
+				std::cout << *prev << "to"<< *next << "=" << dist[*prev][*next] << "  ";
+				if (next != (*rawRoutes)[i][j]->begin()) prev++;
 			}
 			allRoute[i].push_back(r);
 			std::cout << std::endl;

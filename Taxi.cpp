@@ -45,15 +45,17 @@ void Taxi::update(sf::Time deltaTime){
         // reset time, but keep the remainder
         m_currentTime = sf::microseconds(m_currentTime.asMicroseconds() % m_frameTime.asMicroseconds());
 		if (currentDestination != NULL) {
-			x =(**currentDestination)->getX();
-			y =(**currentDestination)->getY();
+			x += dx;
+			y += dy;
 		}
     }
 }
 void Taxi::updateCurrentCity(){
 	if (int(currentDestination) != NULL) {
-		if (Collision::pointOverFloatRect(x,y,(**currentDestination)->getRectangle())) {
-			currentLocation = **currentDestination;
+		if (Collision::pointOverFloatRect(x,y,(**currentDestination).first->getRectangle())) {
+			currentLocation = (**currentDestination).first;
+			x = currentLocation->getX();
+			y = currentLocation->getY();
 		}
 	}
 }
@@ -61,7 +63,7 @@ void Taxi::updateLocation(){
 	if (int(currentRoute) != NULL) {
 		if (int(currentPreviousLocation) != NULL) {
 			std::cout << x << " " << y << std::endl;
-			if (*currentLocation == ***currentDestination) {
+			if (*currentLocation == *(**currentDestination).first) {
 				(*currentPreviousLocation)++;
 				(*currentDestination)++;
 			}
@@ -74,6 +76,14 @@ void Taxi::updateLocation(){
 			currentRoute = NULL;
 			currentDestination = NULL;
 			currentPreviousLocation = NULL;
+			dx = 0;
+			dy = 0;
+		} else {
+			double dist = (**currentDestination).second;
+			double time = dist / speed;
+			double totalFrame = time / m_frameTime.asSeconds();
+			dx = ((**currentDestination).first->getX() - currentLocation->getX())/ totalFrame;
+			dy = ((**currentDestination).first->getY() - currentLocation->getY())/ totalFrame;
 		}
 	}
 }
